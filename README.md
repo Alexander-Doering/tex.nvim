@@ -7,6 +7,7 @@ Lazy:
 ```lua
 return {
   "eczovian/tex.nvim",
+  ft = 'tex',
   opts={}
 }
 ```
