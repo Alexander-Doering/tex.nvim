@@ -29,13 +29,14 @@ end
 --- @param file_dir string
 --- @return tex.Autocmd | nil
 local open_workspace = function(file_dir)
+	output_dir = "-output-directory./output"
 	if vim.uv.fs_stat(file_dir) then
 		return {
 			cmd = {
 				"latexmk",
 				vim.api.nvim_buf_get_name(0),
 				"-pdf",
-				"-output-directory=./output", -- NOTE: Modularize
+				output_dir,
 				"-interaction=nonstopmode",
 			},
 			--- @type vim.SystemOpts
