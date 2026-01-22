@@ -68,7 +68,7 @@ M.setup = function(opts)
 	if string.len(file_dir) == 0 then
 		return
 	end
-	local output_dir = "./output"
+	local output_dir = opts.output_dir
 	local autocmd_config = open_workspace(file_dir, output_dir)
 	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		pattern = { "*.tex" },
