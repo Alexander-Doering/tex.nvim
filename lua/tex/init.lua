@@ -50,7 +50,10 @@ local open_workspace = function(file_dir, output_dir)
 					end)
 				else
 					vim.schedule(function()
-						vim.notify("Your latex file has successfully compiled to: !", vim.diagnostic.severity.INFO)
+						vim.notify(
+							"Your latex file has successfully compiled to: " .. output_dir .. "!",
+							vim.diagnostic.severity.INFO
+						)
 						-- NOTE: Open compiled file here (optional)
 					end)
 				end
