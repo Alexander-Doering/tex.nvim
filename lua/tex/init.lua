@@ -27,16 +27,17 @@ local open_window = function(content)
 end
 
 --- @param file_dir string
+--- @param output_dir string
 --- @return tex.Autocmd | nil
-local open_workspace = function(file_dir)
-	output_dir = "-output-directory./output"
+local open_workspace = function(file_dir, output_dir)
+	local output_loc = "-output-directory=" + output_dir
 	if vim.uv.fs_stat(file_dir) then
 		return {
 			cmd = {
 				"latexmk",
 				vim.api.nvim_buf_get_name(0),
 				"-pdf",
-				output_dir,
+				output_loc,
 				"-interaction=nonstopmode",
 			},
 			--- @type vim.SystemOpts
@@ -49,7 +50,10 @@ local open_workspace = function(file_dir)
 					end)
 				else
 					vim.schedule(function()
-						vim.notify("Your latex file has successfully compiled!", vim.diagnostic.severity.INFO)
+						vim.notify(
+							"Your latex file has successfully compiled to: !" + output_loc,
+							vim.diagnostic.severity.INFO
+						)
 						-- NOTE: Open compiled file here (optional)
 					end)
 				end
@@ -68,7 +72,7 @@ M.setup = function(opts)
 	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		pattern = { "*.tex" },
 		callback = function()
-			if string.match(vim.api.nvim_buf_get_name(0), "structure%a.tex") or autocmd_config == nil then
+			if string.match(vim.api.nvim_buf_get_name(0), "structure.tex") or autocmd_config == nil then
 				return
 			end
 			vim.system(autocmd_config.cmd, autocmd_config.opts, autocmd_config.handler)
