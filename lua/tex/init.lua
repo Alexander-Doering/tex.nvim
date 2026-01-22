@@ -30,7 +30,7 @@ end
 --- @param output_dir string
 --- @return tex.Autocmd | nil
 local open_workspace = function(file_dir, output_dir)
-	local output_loc = "-output-directory=" + output_dir
+	local output_loc = "-output-directory=" .. output_dir
 	if vim.uv.fs_stat(file_dir) then
 		return {
 			cmd = {
