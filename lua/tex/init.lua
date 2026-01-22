@@ -50,10 +50,7 @@ local open_workspace = function(file_dir, output_dir)
 					end)
 				else
 					vim.schedule(function()
-						vim.notify(
-							"Your latex file has successfully compiled to: !" + output_loc,
-							vim.diagnostic.severity.INFO
-						)
+						vim.notify("Your latex file has successfully compiled to: !", vim.diagnostic.severity.INFO)
 						-- NOTE: Open compiled file here (optional)
 					end)
 				end
@@ -68,7 +65,8 @@ M.setup = function(opts)
 	if string.len(file_dir) == 0 then
 		return
 	end
-	local autocmd_config = open_workspace(file_dir)
+	local output_dir = "./output"
+	local autocmd_config = open_workspace(file_dir, output_dir)
 	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		pattern = { "*.tex" },
 		callback = function()
