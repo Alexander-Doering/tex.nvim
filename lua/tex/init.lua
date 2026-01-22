@@ -31,6 +31,7 @@ end
 --- @return tex.Autocmd | nil
 local open_workspace = function(file_dir, output_dir)
 	local output_loc = "-output-directory=" .. output_dir
+	print(output_loc)
 	if vim.uv.fs_stat(file_dir) then
 		return {
 			cmd = {
